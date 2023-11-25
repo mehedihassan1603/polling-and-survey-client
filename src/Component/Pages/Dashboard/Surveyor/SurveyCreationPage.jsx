@@ -4,121 +4,115 @@ const SurveyCreationPage = () => {
   const [surveyData, setSurveyData] = useState({
     title: '',
     description: '',
-    options: ['Yes', 'No'],
-    category: '',
+    category: 'Entertainment',
+    questions: [
+      { text: 'Do you often use streaming services for entertainment?', answer: '' },
+      { text: 'Have you attended a live event in the past year?', answer: '' },
+      { text: 'Do you prefer watching movies at home or in a theater?', answer: '' },
+      { text: 'Do you feel that your current workload is manageable?', answer: '' },
+      { text: 'Have you received sufficient training for your role in the past year?', answer: '' },
+      { text: 'Do you have regular one-on-one meetings with your supervisor?', answer: '' },
+      { text: 'Do you feel valued and appreciated in your current role?', answer: '' },
+      { text: 'Have you participated in any employee engagement in the past quarter?', answer: '' },
+      { text: 'Do you believe your opinions are taken into consideration?', answer: '' },
+    ],
   });
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setSurveyData((prevData) => ({ ...prevData, [name]: value }));
+    setSurveyData({
+      ...surveyData,
+      [name]: value,
+    });
   };
 
-  const handleOptionChange = (index, e) => {
-    const newOptions = [...surveyData.options];
-    newOptions[index] = e.target.value;
-    setSurveyData((prevData) => ({ ...prevData, options: newOptions }));
+  const handleAnswerChange = (index, value) => {
+    const updatedQuestions = [...surveyData.questions];
+    updatedQuestions[index].answer = value;
+    setSurveyData({
+      ...surveyData,
+      questions: updatedQuestions,
+    });
   };
 
-  const handleAddOption = () => {
-    setSurveyData((prevData) => ({ ...prevData, options: [...prevData.options, ''] }));
-  };
-
-  const handleRemoveOption = (index) => {
-    const newOptions = [...surveyData.options];
-    newOptions.splice(index, 1);
-    setSurveyData((prevData) => ({ ...prevData, options: newOptions }));
-  };
-
-  const handleCreateSurvey = () => {
-    // Add logic to send surveyData to the backend
-    // Include a timestamp from the backend
-    // For simplicity, console.log is used here
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle survey submission logic here
     console.log('Survey Data:', surveyData);
   };
 
   return (
-    <div className="container mx-auto my-8">
-      <h1 className="text-3xl font-semibold mb-4">Survey Creation</h1>
-
-      <form className="max-w-md mx-auto">
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-semibold mb-4">Create a Survey</h1>
+      <form onSubmit={handleSubmit} className="max-w-full">
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
-            Title
-          </label>
+          <label className="block text-sm font-medium text-gray-600">Title:</label>
           <input
             type="text"
-            id="title"
             name="title"
             value={surveyData.title}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={handleInputChange}
+            className="mt-1 p-2 w-full border rounded-md"
           />
         </div>
-
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
-            Description
-          </label>
+          <label className="block text-sm font-medium text-gray-600">Description:</label>
           <textarea
-            id="description"
             name="description"
             value={surveyData.description}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={handleInputChange}
+            className="mt-1 p-2 w-full border rounded-md"
           />
         </div>
-
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
-            Category
-          </label>
-          <input
-            type="text"
-            id="category"
+          <label className="block text-sm font-medium text-gray-600">Category:</label>
+          <select
             name="category"
             value={surveyData.category}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Options</label>
-          {surveyData.options.map((option, index) => (
-            <div key={index} className="flex mb-2">
-              <input
-                type="text"
-                value={option}
-                onChange={(e) => handleOptionChange(index, e)}
-                className="shadow appearance-none border rounded w-4/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
-              />
-              <button
-                type="button"
-                onClick={() => handleRemoveOption(index)}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={handleAddOption}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+            onChange={handleInputChange}
+            className="mt-1 p-2 w-full border rounded-md"
           >
-            Add Option
-          </button>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Work">Work</option>
+            <option value="Employee Engagement">Employee Engagement</option>
+          </select>
         </div>
-
         <div className="mb-4">
-          <button
-            type="button"
-            onClick={handleCreateSurvey}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Create Survey
-          </button>
+          <label className="block text-sm font-medium text-gray-600">Questions:</label>
+          <ul>
+            {surveyData.questions.map((question, index) => (
+              <li key={index} className="mb-2 flex justify-between items-center">
+                <p className="mr-2 text-lg">{index + 1}. {question.text}</p>
+                <div className="flex justify-center items-center mt-2">
+                  <label className="mr-2">
+                    <input
+                      type="radio"
+                      value="Yes"
+                      checked={question.answer === 'Yes'}
+                      onChange={() => handleAnswerChange(index, 'Yes')}
+                      className="mr-1 text-lg radio checked:bg-blue-500"
+                    />
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="No"
+                      checked={question.answer === 'No'}
+                      onChange={() => handleAnswerChange(index, 'No')}
+                      className="mr-1 radio checked:bg-red-500"
+                    />
+                    No
+                  </label>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
+        
+        <button type="submit" className="bg-green-500 text-white p-2 rounded-md">
+          Create Survey
+        </button>
       </form>
     </div>
   );

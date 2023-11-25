@@ -1,17 +1,16 @@
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
     return (
         <div className="flex gap-10 w-10/12 mx-auto bg-red-200">
             <div className="w-64 min-h-full bg-slate-400">
-                <h1>hello</h1>
-                <h1>hello</h1>
-                <h1>hello</h1>
-                <h1>hello</h1>
-                <h1>hello</h1>
-                <h1>hello</h1>
-                <h1>hello</h1>
-                <h1>hello</h1>
+                <ul>
+                    <li><button className="btn btn-primary"><NavLink to="/dashboard/surveycreation">Create Survey</NavLink></button></li>
+                    <li><button className="btn btn-secondary"><NavLink to="/dashboard/admin">Admin</NavLink></button></li>
+                    <li><button className="btn btn-accent"><NavLink to="/dashboard/surveyor">Surveyor</NavLink></button></li>
+                    <li><button className="btn btn-success"><NavLink to="/dashboard/user">User</NavLink></button></li>
+                    <li><button className="btn btn-info"><NavLink to="/dashboard/prouser">Pro User</NavLink></button></li>
+                </ul>
             </div>
             <div className="w-full">
                 <Outlet></Outlet>

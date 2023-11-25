@@ -13,6 +13,11 @@ import SurveyDetailsPage from './Component/Pages/SurveyDetailsPage/SurveyDetails
 import PricingPage from './Component/Pages/PricingPage/PricingPage.jsx';
 import Dashboard from './Component/Layout/Dashboard/Dashboard.jsx';
 import SurveyCreationPage from './Component/Pages/Dashboard/Surveyor/SurveyCreationPage.jsx';
+import AdminDashboard from './Component/Pages/Dashboard/AdminDashboard/AdminDashboard.jsx';
+import SurveyorDashboard from './Component/Pages/Dashboard/Surveyor Dashboard/SurveyorDashboard.jsx';
+import UserDashboard from './Component/Pages/Dashboard/User Dashboard/UserDashboard.jsx';
+import ProUserDashboard from './Component/Pages/Dashboard/Pro User Dashboard/ProUserDashboard.jsx';
+import SurveyForm from './Component/Pages/Dashboard/Surveyor/SurveyForm.jsx';
 
 const router = createBrowserRouter([
   {
@@ -45,7 +50,23 @@ const router = createBrowserRouter([
       {
         path: 'surveycreation',
         element: <SurveyCreationPage></SurveyCreationPage>
-      }
+      },
+      {
+        path: 'admin',
+        element: <AdminDashboard></AdminDashboard>
+      },
+      {
+        path: 'surveyor',
+        element: <SurveyorDashboard></SurveyorDashboard>
+      },
+      {
+        path: 'user',
+        element: <UserDashboard></UserDashboard>
+      },
+      {
+        path: 'prouser',
+        element: <ProUserDashboard></ProUserDashboard>
+      },
     ]
   }
 ]);
