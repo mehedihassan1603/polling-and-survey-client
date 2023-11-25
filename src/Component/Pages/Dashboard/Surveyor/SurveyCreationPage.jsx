@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SurveyCreationPage = () => {
   const [surveyData, setSurveyData] = useState({
@@ -35,11 +37,34 @@ const SurveyCreationPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle survey submission logic here
-    console.log('Survey Data:', surveyData);
+  
+    try {
+      const response = await fetch('http://localhost:5000/survey', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(surveyData),
+      })
+      
+  
+      if (response.ok) {
+        toast.success("Survey Created Successfully!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+          });
+      } else {
+        console.error('Error submitting survey:', response.statusText);
+        // Handle error scenarios
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+      // Handle network errors or other issues
+    }
   };
+  
 
   return (
     <div className="container mx-auto p-4">
@@ -114,6 +139,7 @@ const SurveyCreationPage = () => {
           Create Survey
         </button>
       </form>
+      <ToastContainer></ToastContainer>
     </div>
   );
 };
