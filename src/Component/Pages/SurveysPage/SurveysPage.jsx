@@ -1,43 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const SurveysPage = () => {
-  const [surveys, setSurveys] = useState([
-    {
-      title: "Employee Satisfaction Survey",
-      shortDescription: "Share your thoughts on your overall satisfaction with the company.",
-      totalVoted: 125,
-      like: 85,
-      dislike: 40,
-      category: "Employee Engagement"
-    },
-    {
-      title: "Health and Wellness Check",
-      shortDescription: "Let us know if you are currently satisfied with the wellness programs provided.",
-      totalVoted: 92,
-      like: 70,
-      dislike: 22,
-      category: "Health and Wellness"
-    },
-    {
-      title: "Website User Experience Survey",
-      shortDescription: "Share your thoughts on the user experience to help us enhance our website.",
-      totalVoted: 150,
-      like: 120,
-      dislike: 30,
-      category: "User Experience"
-    },
-    // Add more surveys as needed
-  ]);
-
+  const [surveys, setSurveys] = useState([]);
   const [filters, setFilters] = useState({
     title: "All",
     category: "All",
-    vote: "All"
+    vote: "All",
+    sort: "All", // Default sorting order (desc for highest to lowest)
   });
 
+  useEffect(() => {
+    // Fetch survey data from the API using Axios
+    axios
+      .get("http://localhost:5000/survey")
+      .then((response) => setSurveys(response.data))
+      .catch((error) => console.error("Error fetching survey data:", error));
+  }, []); // The empty dependency array ensures that the effect runs only once, similar to componentDidMount
+
   const filterSurveys = () => {
-    // Replace this logic with your own filtering implementation
-    return surveys;
+    // Replace this logic with your own filtering and sorting implementation
+    let filteredData = [...surveys];
+
+    if (filters.title !== "All") {
+      filteredData = filteredData.filter(
+        (survey) => survey.title === filters.title
+      );
+    }
+
+    if (filters.category !== "All") {
+      filteredData = filteredData.filter(
+        (survey) => survey.category === filters.category
+      );
+    }
+
+    if (filters.vote !== "All") {
+      // Assuming you have a field like 'voteType' in your survey data
+      filteredData = filteredData.filter(
+        (survey) => survey.voteType === filters.vote
+      );
+    }
+
+    // Sorting based on totalVoted
+    filteredData.sort((a, b) => {
+      const orderMultiplier = filters.sort === "asc" ? 1 : -1;
+      return (a.totalVoted - b.totalVoted) * orderMultiplier;
+    });
+
+    return filteredData;
   };
 
   const filteredSurveys = filterSurveys();
@@ -55,8 +66,10 @@ const SurveysPage = () => {
             onChange={(e) => setFilters({ ...filters, title: e.target.value })}
           >
             <option value="All">All</option>
-            {surveys.map(survey => (
-              <option key={survey.title} value={survey.title}>{survey.title}</option>
+            {surveys.map((survey) => (
+              <option key={survey.title} value={survey.title}>
+                {survey.title}
+              </option>
             ))}
           </select>
         </div>
@@ -65,11 +78,15 @@ const SurveysPage = () => {
           <label className="mr-2">Category:</label>
           <select
             className="border p-1"
-            onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+            onChange={(e) =>
+              setFilters({ ...filters, category: e.target.value })
+            }
           >
             <option value="All">All</option>
-            {surveys.map(survey => (
-              <option key={survey.category} value={survey.category}>{survey.category}</option>
+            {surveys.map((survey) => (
+              <option key={survey.category} value={survey.category}>
+                {survey.category}
+              </option>
             ))}
           </select>
         </div>
@@ -85,11 +102,23 @@ const SurveysPage = () => {
             <option value="Disliked">Disliked</option>
           </select>
         </div>
+
+        <div className="flex items-center">
+          <label className="mr-2">Sort:</label>
+          <select
+            className="border p-1"
+            onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
+          >
+            <option value="All">Select</option>
+            <option value="desc">Highest to Lowest</option>
+            <option value="asc">Lowest to Highest</option>
+          </select>
+        </div>
       </div>
 
       {/* Display Surveys */}
       <div>
-        {filteredSurveys.map(survey => (
+        {filteredSurveys.map((survey) => (
           <div key={survey.title} className="mb-8 p-4 border rounded">
             <h3 className="text-xl font-semibold mb-2">{survey.title}</h3>
             <p className="mb-2">{survey.shortDescription}</p>
@@ -97,6 +126,11 @@ const SurveysPage = () => {
             <p>Likes: {survey.like}</p>
             <p>Dislikes: {survey.dislike}</p>
             <p>Category: {survey.category}</p>
+            <Link to={`/details/${survey._id}`}>
+              <button className="text-lg rounded-lg card-hover mt-4 bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500">
+                Details
+              </button>
+            </Link>
           </div>
         ))}
       </div>

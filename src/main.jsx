@@ -11,6 +11,8 @@ import Home from './Component/Homepage/Home/Home.jsx';
 import SurveysPage from './Component/Pages/SurveysPage/SurveysPage.jsx';
 import SurveyDetailsPage from './Component/Pages/SurveyDetailsPage/SurveyDetailsPage.jsx';
 import PricingPage from './Component/Pages/PricingPage/PricingPage.jsx';
+import Dashboard from './Component/Layout/Dashboard/Dashboard.jsx';
+import SurveyCreationPage from './Component/Pages/Dashboard/Surveyor/SurveyCreationPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +28,8 @@ const router = createBrowserRouter([
         element:<SurveysPage></SurveysPage>
       },
       {
-        path: "/surveydetails",
+        path: "/details/:_id",
+        loader: () => fetch("http://localhost:5000/survey"),
         element:<SurveyDetailsPage></SurveyDetailsPage>,
       },
       {
@@ -35,6 +38,16 @@ const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: 'surveycreation',
+        element: <SurveyCreationPage></SurveyCreationPage>
+      }
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

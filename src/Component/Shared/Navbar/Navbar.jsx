@@ -33,7 +33,7 @@ const Navbar = () => {
                 <NavLink to="/surveys">Surveys</NavLink>
               </li>
               <li>
-                <NavLink to="/my-posted-job">My Posted Job</NavLink>
+                <NavLink to="/surveydetails">Survey Details</NavLink>
               </li>
               <li>
                 <NavLink to="/my-bids">My Bids</NavLink>
@@ -64,7 +64,7 @@ const Navbar = () => {
             <NavLink to="/surveys">Surveys</NavLink>
             </li>
             <li>
-              <NavLink to="/my-posted-job">My Posted Job</NavLink>
+              <NavLink to="/surveydetails">Survey Details</NavLink>
             </li>
             <li>
               <NavLink to="/my-bids">My Bids</NavLink>
