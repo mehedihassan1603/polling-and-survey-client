@@ -10,7 +10,7 @@ const FeaturedSurveys = () => {
     const fetchFeaturedSurveys = async () => {
       try {
         // Assume the API returns an array of survey objects with vote counts
-        const response = await fetch('/api/featured-surveys');
+        const response = await fetch('http://localhost:5000/survey');
         const data = await response.json();
         setFeaturedSurveys(data);
       } catch (error) {
@@ -25,7 +25,7 @@ const FeaturedSurveys = () => {
     <div>
       <h2>Featured Surveys - Most Voted (Top 6)</h2>
       {featuredSurveys.slice(0, 6).map((survey) => (
-        <div key={survey.id}>
+        <div key={survey._id}>
           <h3>{survey.title}</h3>
           <p>Vote Count: {survey.voteCount}</p>
           {/* Display other survey details as needed */}

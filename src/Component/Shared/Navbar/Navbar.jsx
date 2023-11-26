@@ -1,6 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogout = () => {
+    logOut()
+      .then(() => console.log("Successful"))
+      .catch((error) => console.log(error));
+  };
   return (
     <div>
       <div className="navbar bg-gradient-to-r from-cyan-600 via-cyan-600 to-cyan-700 text-white">
@@ -61,7 +69,7 @@ const Navbar = () => {
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
-            <NavLink to="/surveys">Surveys</NavLink>
+              <NavLink to="/surveys">Surveys</NavLink>
             </li>
             <li>
               <NavLink to="/surveydetails">Survey Details</NavLink>
@@ -74,6 +82,33 @@ const Navbar = () => {
               <NavLink to="/bid-requests">Bid Requests</NavLink>
             </li>
           </ul>
+        </div>
+        <div className="navbar-end">
+          <div className="text-white flex flex-col lg:flex-row items-center">
+            {user ? (
+              <>
+                <div className="flex flex-col justify-center items-center">
+                  <span>
+                    <img
+                      className="w-10 rounded-full"
+                      src={user.photoURL}
+                      alt=""
+                    />
+                  </span>
+                  <span>{user.displayName}</span>
+                </div>
+                <button className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                  <a onClick={handleLogout}>Logout</a>
+                </button>
+              </>
+            ) : (
+              <Link to="/login">
+                <button className="bg-gradient-to-r from-green-800 via-green-600 to-green-800 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                  Login
+                </button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>
