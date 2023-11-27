@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import useAdmin from "../../../AuthProvider/useAdmin";
+import useAxiosSecure from "../../../AuthProvider/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const AdminDashboard = () => {
-  const [userFilter, setUserFilter] = useState('all'); // 'all', 'pro', 'normal', 'surveyor'
-  const [surveyStatus, setSurveyStatus] = useState('published'); // 'published', 'unpublished'
-  const [feedbackMessage, setFeedbackMessage] = useState('');
-  const [surveyResponses, setSurveyResponses] = useState([]); // Assuming this is an array of survey responses
+  const [userFilter, setUserFilter] = useState("all");
+  const [surveyStatus, setSurveyStatus] = useState("published");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [surveyResponses, setSurveyResponses] = useState([]);
+
+  const axiosSecure = useAxiosSecure();
+  const { data: users = [], refetch } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/users");
+      console.log(res.data);
+      return res.data;
+    },
+  });
 
   const handleUserFilterChange = (filter) => {
     setUserFilter(filter);
-    // Fetch and update user data based on the selected filter
   };
 
   const handleSurveyStatusChange = (status) => {
@@ -70,6 +82,38 @@ const AdminDashboard = () => {
         </select>
       </div>
 
+      <div>
+        <div className="flex justify-evenly my-4">
+          <h2 className="text-3xl">All Users</h2>
+          <h2 className="text-3xl">Total Users: {users.length}</h2>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="table table-zebra w-full">
+            {/* head */}
+            <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+        
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user, index) => (
+                <tr key={user._id}>
+                  <th>{index + 1}</th>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.role}</td>
+                  
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {/* Survey Status */}
       <div className="mb-8">
         <label className="mr-4">Survey Status:</label>
@@ -84,7 +128,9 @@ const AdminDashboard = () => {
       </div>
 
       {/* Unpublish Feedback */}
-      {feedbackMessage && <p className="text-green-600 mb-4">{feedbackMessage}</p>}
+      {feedbackMessage && (
+        <p className="text-green-600 mb-4">{feedbackMessage}</p>
+      )}
 
       {/* Payments of Pro Users */}
       <div className="mb-8">

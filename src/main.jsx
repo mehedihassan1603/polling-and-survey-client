@@ -25,6 +25,9 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import Dash from "./Component/Layout/Dashboard/Dash.jsx";
+import AdminRoute from "./Component/Pages/Dashboard/AdminDashboard/AdminRoute.jsx";
+import Payment from "./Component/Pages/Dashboard/Payment/Payment.jsx";
 
 const queryClient = new QueryClient();
 
@@ -74,7 +77,7 @@ const router = createBrowserRouter([
       },
       {
         path: "admin",
-        element: <AdminDashboard></AdminDashboard>,
+        element: <AdminRoute><AdminDashboard></AdminDashboard></AdminRoute>,
       },
       {
         path: "users",
@@ -85,12 +88,16 @@ const router = createBrowserRouter([
         element: <SurveyorDashboard></SurveyorDashboard>,
       },
       {
-        path: "user",
-        element: <UserDashboard></UserDashboard>,
+        path: "payment",
+        element: <Payment></Payment>,
       },
       {
         path: "prouser",
         element: <ProUserDashboard></ProUserDashboard>,
+      },
+      {
+        path: "dash",
+        element: <Dash></Dash>,
       },
     ],
   },

@@ -75,11 +75,11 @@ const Navbar = () => {
               <NavLink to="/surveydetails">Survey Details</NavLink>
             </li>
             <li>
-              <NavLink to="/dashboard/surveyor">Dashboard</NavLink>
+              <NavLink to="/dashboard/admin">Admin Dashboard</NavLink>
             </li>
 
             <li>
-              <NavLink to="/bid-requests">Bid Requests</NavLink>
+              <NavLink to="/dashboard/payment">Pro-User</NavLink>
             </li>
           </ul>
         </div>
