@@ -1,7 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../../AuthProvider/useAdmin";
 
 const Dashboard = () => {
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
   return (
     <div className="flex gap-10 w-10/12 mx-auto bg-red-200">
       <div className="w-64 min-h-full bg-slate-400">
@@ -38,6 +39,11 @@ const Dashboard = () => {
               <li>
                 <button className="btn btn-info">
                   <NavLink to="/dashboard/prouser">Pro User</NavLink>
+                </button>
+              </li>
+              <li>
+                <button className="btn btn-square">
+                  <NavLink to="/">Home</NavLink>
                 </button>
               </li>
             </>
