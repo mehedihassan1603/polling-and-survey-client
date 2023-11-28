@@ -7,12 +7,58 @@ import Swal from "sweetalert2";
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
   const { data: users = [], refetch } = useQuery({
-    queryKey: ['users'],
+    queryKey: ['users', 'payments'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/users');
-      return res.data;
-    }
+      const [usersRes, paymentsRes] = await Promise.all([
+        axiosSecure.get('/users'),
+        axiosSecure.get('/payments'),  // Adjust the endpoint as needed
+      ]);
+
+      const usersData = usersRes.data;
+      console.log(usersData)
+      const paymentsData = paymentsRes.data;
+      console.log(paymentsData)
+
+      // Assuming there is a way to map payments to users, adjust this part accordingly
+      const usersWithPayments = usersData.map(user => {
+        const proUserRequest = paymentsData.find(payment => payment.email === user.email);
+        console.log(proUserRequest)
+        return {
+          ...user,
+          proUserRequest,
+        };
+      });
+
+      console.log(usersWithPayments);
+
+      return usersWithPayments;
+    },
   });
+  const handleAcceptProUserRequest = (user) => {
+    // Assuming there's a way to identify the payment associated with the user
+    const paymentId = user.proUserRequest._id;
+    console.log(paymentId)
+    
+    const userId = user._id;
+
+    axiosSecure.patch(`/payments/${paymentId}`, { status: 'Paid' })
+    .then((res) => {
+      if (res.data.modifiedCount > 0) {
+        // Update user role to 'Pro-User'
+        axiosSecure.patch(`/users/prouser/${userId}`)
+          .then(() => {
+            refetch();
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Pro-User Request Accepted Successfully!`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+        }
+      })
+  };
 
   const handleMakeAdmin = (user) => {
     axiosSecure.patch(`/users/admin/${user._id}`)
@@ -73,6 +119,7 @@ const AllUsers = () => {
       }
     });
   };
+  
 
   return (
     <div>
@@ -99,24 +146,36 @@ const AllUsers = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                  {user.role === 'admin' ? 'Admin' : user.role === 'surveyor' ? 'Surveyor' : (
-                    <div>
-                      <button
-                        onClick={() => handleMakeAdmin(user)}
-                        className="btn btn-lg bg-orange-500"
-                      >
-                        <FaUsers className="text-white text-2xl"></FaUsers>
-                      </button>
-                      <button
-                        onClick={() => handleMakeSurveyor(user)}
-                        className="btn btn-lg bg-blue-500 ml-2"
-                      >
-                        {/* You can use a different icon for the surveyor */}
-                        <FaUsers className="text-white text-2xl"></FaUsers>
-                      </button>
-                    </div>
-                  )}
-                </td>
+                {user.role === 'admin' ? 'Admin' : user.role === 'surveyor' ? 'Surveyor' : (
+                  <div>
+                    {user.proUserRequest && user.proUserRequest.status === 'pending' ? (
+                      <div className="flex flex-col justify-center items-center">
+                        <h1>Pro-User Request</h1>
+                        <div>
+                          <button onClick={() => handleAcceptProUserRequest(user)}>
+                            Accept
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <button
+                          onClick={() => handleMakeAdmin(user)}
+                          className="btn bg-orange-500"
+                        >
+                          <FaUsers className="text-white"></FaUsers>
+                        </button>
+                        <button
+                          onClick={() => handleMakeSurveyor(user)}
+                          className="btn bg-blue-500 ml-2"
+                        >
+                          <FaUsers className="text-white"></FaUsers>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </td>
                 <td>
                   <button
                     onClick={() => handleDeleteUser(user)}

@@ -37,8 +37,6 @@ const AdminRoute = ({ children }) => {
 
   return (
     <>
-    
-    
       <ToastContainer />
     </>
   );

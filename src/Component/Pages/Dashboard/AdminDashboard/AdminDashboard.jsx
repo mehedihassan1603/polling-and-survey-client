@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAdmin from "../../../AuthProvider/useAdmin";
 import useAxiosSecure from "../../../AuthProvider/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 
 const AdminDashboard = () => {
   const [userFilter, setUserFilter] = useState("all");
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [surveyStatus, setSurveyStatus] = useState("published");
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [surveyResponses, setSurveyResponses] = useState([]);
@@ -19,8 +20,29 @@ const AdminDashboard = () => {
     },
   });
 
+  useEffect(() => {
+    // Filter users based on the selected role when the component mounts
+    handleUserFilterChange(userFilter);
+  }, []); // Empty dependency array to run the effect only once when the component mounts
+
   const handleUserFilterChange = (filter) => {
     setUserFilter(filter);
+
+    // Filter users based on the selected role
+    switch (filter) {
+      default:
+        setFilteredUsers(users);
+        break
+      case 'pro':
+        setFilteredUsers(users.filter(user => user.role === 'Pro-User'));
+        break;
+      case 'normal':
+        setFilteredUsers(users.filter(user => !user.role));
+        break;
+      case 'surveyor':
+        setFilteredUsers(users.filter(user => user.role === 'surveyor'));
+        break;
+    }
   };
 
   const handleSurveyStatusChange = (status) => {
@@ -84,8 +106,8 @@ const AdminDashboard = () => {
 
       <div>
         <div className="flex justify-evenly my-4">
-          <h2 className="text-3xl">All Users</h2>
-          <h2 className="text-3xl">Total Users: {users.length}</h2>
+          <h2 className="text-3xl">Filtered Users</h2>
+          <h2 className="text-3xl">Total Users: {filteredUsers.length}</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="table table-zebra w-full">
@@ -96,25 +118,24 @@ const AdminDashboard = () => {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
-        
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {filteredUsers.map((user, index) => (
                 <tr key={user._id}>
                   <th>{index + 1}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
-                  
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+    
 
-      {/* Survey Status */}
+    
       <div className="mb-8">
         <label className="mr-4">Survey Status:</label>
         <select
