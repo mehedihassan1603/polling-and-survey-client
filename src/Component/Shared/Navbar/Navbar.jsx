@@ -78,9 +78,9 @@ const Navbar = () => {
               <NavLink to="/dashboard/admin">Admin Dashboard</NavLink>
             </li>
 
-            <li>
+            {/* <li>
               <Link to="/dashboard/payment">Pro-User</Link>
-            </li>
+            </li> */}
 
             <li>
               <NavLink to="/pricing">Pricing</NavLink>

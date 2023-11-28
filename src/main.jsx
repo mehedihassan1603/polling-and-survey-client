@@ -28,6 +28,7 @@ import {
 import Dash from "./Component/Layout/Dashboard/Dash.jsx";
 import AdminRoute from "./Component/Pages/Dashboard/AdminDashboard/AdminRoute.jsx";
 import Payment from "./Component/Pages/Dashboard/Payment/Payment.jsx";
+import PaymentHistory from "./Component/Pages/Dashboard/Payment/PaymentHistory.jsx";
 
 const queryClient = new QueryClient();
 
@@ -77,7 +78,11 @@ const router = createBrowserRouter([
       },
       {
         path: "admin",
-        element: <AdminRoute><AdminDashboard></AdminDashboard></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <AdminDashboard></AdminDashboard>
+          </AdminRoute>
+        ),
       },
       {
         path: "users",
@@ -98,6 +103,20 @@ const router = createBrowserRouter([
       {
         path: "dash",
         element: <Dash></Dash>,
+      },
+    ],
+  },
+  {
+    path: "userDashboard",
+    element: <UserDashboard></UserDashboard>,
+    children: [
+      {
+        path: "payment",
+        element: <Payment></Payment>,
+      },
+      {
+        path: "paymentHistory",
+        element: <PaymentHistory></PaymentHistory>,
       },
     ],
   },

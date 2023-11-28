@@ -52,7 +52,7 @@ const PricingPage = () => {
           <button
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2"
           >
-            <NavLink to="/payment">Become Pro</NavLink>
+            <NavLink to="/userDashboard/payment">Become Pro-User</NavLink>
           </button>
         </div>
       </div>
