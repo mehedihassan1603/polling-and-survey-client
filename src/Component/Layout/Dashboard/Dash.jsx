@@ -65,7 +65,7 @@ const Dashboard = () => {
             </li>
             <li>
               <button className="btn btn-secondary">
-                <NavLink to="/dashboard/admin" activeClassName="bg-blue-500">
+                <NavLink to="/dashboard/admin">
                   Admin
                 </NavLink>
               </button>

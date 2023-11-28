@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Assuming you're using React Router
 // import { useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const PricingPage = () => {
 //   const history = useHistory();
@@ -36,7 +37,7 @@ const PricingPage = () => {
       <div className="flex space-x-4 mb-4">
         <div className="p-6 border rounded">
           <h2 className="text-xl font-semibold mb-2">Basic</h2>
-          <p>$10/month</p>
+          <p>Free</p>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
             onClick={handlePayment}
@@ -50,12 +51,13 @@ const PricingPage = () => {
           <p>$20/month</p>
           <button
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2"
-            onClick={handlePayment}
           >
-            Become Pro
+            <NavLink to="/payment">Become Pro</NavLink>
           </button>
         </div>
       </div>
+
+      
 
       {/* Link to become a pro user */}
       {!user.isPro && (
