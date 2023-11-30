@@ -29,6 +29,7 @@ import Dash from "./Component/Layout/Dashboard/Dash.jsx";
 import AdminRoute from "./Component/Pages/Dashboard/AdminDashboard/AdminRoute.jsx";
 import Payment from "./Component/Pages/Dashboard/Payment/Payment.jsx";
 import PaymentHistory from "./Component/Pages/Dashboard/Payment/PaymentHistory.jsx";
+import AdminHome from "./Component/Pages/Dashboard/AdminDashboard/AdminHome.jsx";
 
 const queryClient = new QueryClient();
 
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
       {
         path: "/details/:_id",
         loader: () => fetch("http://localhost:5000/survey"),
-        element: <SurveyDetailsPage></SurveyDetailsPage>,
+        element: <PrivateRoute><SurveyDetailsPage></SurveyDetailsPage></PrivateRoute>,
       },
       {
         path: "/pricing",
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        path: "adminHome",
+        element: <AdminHome></AdminHome>,
+      },
       {
         path: "surveycreation",
         element: <SurveyCreationPage></SurveyCreationPage>,

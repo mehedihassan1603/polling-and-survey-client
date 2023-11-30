@@ -8,19 +8,21 @@ const SurveysPage = () => {
     title: "All",
     category: "All",
     vote: "All",
-    sort: "All", // Default sorting order (desc for highest to lowest)
+    sort: "All", 
   });
 
   useEffect(() => {
-    // Fetch survey data from the API using Axios
     axios
       .get("http://localhost:5000/survey")
       .then((response) => setSurveys(response.data))
       .catch((error) => console.error("Error fetching survey data:", error));
-  }, []); // The empty dependency array ensures that the effect runs only once, similar to componentDidMount
+  }, []); 
+  const getUniqueCategories = () => {
+    const uniqueCategories = [...new Set(surveys.map((survey) => survey.category))];
+    return ["All", ...uniqueCategories];
+  };
 
   const filterSurveys = () => {
-    // Replace this logic with your own filtering and sorting implementation
     let filteredData = [...surveys];
 
     if (filters.title !== "All") {
@@ -36,13 +38,10 @@ const SurveysPage = () => {
     }
 
     if (filters.vote !== "All") {
-      // Assuming you have a field like 'voteType' in your survey data
       filteredData = filteredData.filter(
         (survey) => survey.voteType === filters.vote
       );
     }
-
-    // Sorting based on totalVoted
     filteredData.sort((a, b) => {
       const orderMultiplier = filters.sort === "asc" ? 1 : -1;
       return (a.totalVoted - b.totalVoted) * orderMultiplier;
@@ -52,12 +51,16 @@ const SurveysPage = () => {
   };
 
   const filteredSurveys = filterSurveys();
+  const uniqueCategories = getUniqueCategories();
+  const getRandomColor = () => {
+    const colors = ["bg-blue-200", "bg-green-200", "bg-yellow-200", "bg-pink-200", "bg-purple-200"];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
 
   return (
     <div className="container mx-auto my-8">
       <h1 className="text-3xl font-semibold mb-4">Surveys Page</h1>
 
-      {/* Filters */}
       <div className="flex space-x-4 mb-4">
         <div className="flex items-center">
           <label className="mr-2">Title:</label>
@@ -82,10 +85,9 @@ const SurveysPage = () => {
               setFilters({ ...filters, category: e.target.value })
             }
           >
-            <option value="All">All</option>
-            {surveys.map((survey) => (
-              <option key={survey.category} value={survey.category}>
-                {survey.category}
+            {uniqueCategories.map((category) => (
+              <option key={category} value={category}>
+                {category}
               </option>
             ))}
           </select>
@@ -116,18 +118,22 @@ const SurveysPage = () => {
         </div>
       </div>
 
-      {/* Display Surveys */}
-      <div>
-        {filteredSurveys.map((survey) => (
-          <div key={survey.title} className="mb-8 p-4 border rounded">
+      <div className="grid grid-cols-2 gap-4">
+        {filteredSurveys.map((survey, index) => (
+          <div
+            key={survey.title}
+            className={`p-4 border rounded ${
+              index % 2 === 0 ? "bg-blue-200" : "bg-green-200"
+            }`}
+          >
             <h3 className="text-xl font-semibold mb-2">{survey.title}</h3>
-            <p className="mb-2">{survey.shortDescription}</p>
-            <p>Total Voted: {survey.totalVoted}</p>
+            <p className="mb-2">Description: {survey.description}</p>
+            <p>Total Voted: {survey.totalVote}</p>
             <p>Likes: {survey.like}</p>
             <p>Dislikes: {survey.dislike}</p>
             <p>Category: {survey.category}</p>
             <Link to={`/details/${survey._id}`}>
-              <button className="text-lg rounded-lg card-hover mt-4 bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500">
+              <button className="text-lg rounded-lg card-hover mt-4 bg-gradient-to-r from-slate-700 via-black to-slate-700 py-2 px-4 text-white">
                 Details
               </button>
             </Link>

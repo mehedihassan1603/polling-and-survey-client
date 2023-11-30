@@ -1,15 +1,11 @@
-import { NavLink, Outlet, useLocation } from "react-router-dom";
-import useAdmin from "../../AuthProvider/useAdmin";
+import { NavLink, useLocation } from "react-router-dom";
 
-const Dashboard = () => {
-  const [isAdmin] = useAdmin();
-  const location = useLocation();
-
-  return (
-    <div className="flex gap-10 w-10/12 mx-auto bg-red-200">
-      <div className="w-64 min-h-screen bg-slate-400">
-        {isAdmin ? (
-          <ul className="transition-all ease-in-out duration-300 mt-20 flex flex-col gap-10">
+const AdminHome = () => {
+    const location = useLocation();
+    return (
+        <div>
+            <h1 className="text-center text-3xl bg-slate-600 p-4 rounded-md text-white w-9/12 mx-auto mt-4">This is Admin Homepage. </h1>
+            <ul className="transition-all ease-in-out duration-300 mt-20 flex flex-col gap-10">
             <li>
               <NavLink
                 to="/dashboard/adminHome"
@@ -60,15 +56,8 @@ const Dashboard = () => {
             </li>
             {/* Add dividers as needed */}
           </ul>
-        ) : (
-          <p>Loading for Admin Permission</p>
-        )}
-      </div>
-      <div className="w-full">
-        <Outlet />
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
-export default Dashboard;
+export default AdminHome;

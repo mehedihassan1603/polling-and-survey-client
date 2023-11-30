@@ -30,11 +30,11 @@ const PricingPage = () => {
   };
 
   return (
-    <div className="container mx-auto my-8">
+    <div className="container mx-auto my-10 w-8/12 mx-auto">
       <h1 className="text-3xl font-semibold mb-4">Pricing Page</h1>
 
       {/* Pricing options */}
-      <div className="flex space-x-4 mb-4">
+      <div className="flex justify-center space-x-4 mb-4">
         <div className="p-6 border rounded">
           <h2 className="text-xl font-semibold mb-2">Basic</h2>
           <p>Free</p>
@@ -52,7 +52,7 @@ const PricingPage = () => {
           <button
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2"
           >
-            <NavLink to="/userDashboard/payment">Become Pro-User</NavLink>
+            <NavLink to="../../../blog.html">Become Pro-User</NavLink>
           </button>
         </div>
       </div>

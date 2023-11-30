@@ -7,30 +7,48 @@ const SurveyCreationPage = () => {
     title: '',
     description: '',
     category: 'Entertainment',
-    questions: [
-      { text: 'Do you often use streaming services for entertainment?', answer: '' },
-      { text: 'Have you attended a live event in the past year?', answer: '' },
-      { text: 'Do you prefer watching movies at home or in a theater?', answer: '' },
-      { text: 'Do you feel that your current workload is manageable?', answer: '' },
-      { text: 'Have you received sufficient training for your role in the past year?', answer: '' },
-      { text: 'Do you have regular one-on-one meetings with your supervisor?', answer: '' },
-      { text: 'Do you feel valued and appreciated in your current role?', answer: '' },
-      { text: 'Have you participated in any employee engagement in the past quarter?', answer: '' },
-      { text: 'Do you believe your opinions are taken into consideration?', answer: '' },
-    ],
+    questions: [{ question: '', options: ['Yes', 'No'] }],
+    totalVote: 0,
+    like: 0,
+    dislike: 0,
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e, index) => {
     const { name, value } = e.target;
+    
+    if (name === 'title' || name === 'description') {
+      setSurveyData({
+        ...surveyData,
+        [name]: value,
+      });
+    } else {
+      const updatedQuestions = [...surveyData.questions];
+      updatedQuestions[index][name] = value;
+
+      setSurveyData({
+        ...surveyData,
+        questions: updatedQuestions,
+      });
+    }
+  };
+  const handleCategoryChange = (e) => {
     setSurveyData({
       ...surveyData,
-      [name]: value,
+      category: e.target.value,
     });
   };
 
-  const handleAnswerChange = (index, value) => {
+
+  const addQuestion = () => {
+    setSurveyData({
+      ...surveyData,
+      questions: [...surveyData.questions, { question: '', options: ['Yes', 'No'] }],
+    });
+  };
+
+  const removeQuestion = (index) => {
     const updatedQuestions = [...surveyData.questions];
-    updatedQuestions[index].answer = value;
+    updatedQuestions.splice(index, 1);
     setSurveyData({
       ...surveyData,
       questions: updatedQuestions,
@@ -39,7 +57,7 @@ const SurveyCreationPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await fetch('http://localhost:5000/survey', {
         method: 'POST',
@@ -47,14 +65,13 @@ const SurveyCreationPage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(surveyData),
-      })
-      
-  
+      });
+
       if (response.ok) {
-        toast.success("Survey Created Successfully!", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000,
-          });
+        toast.success('Survey Created Successfully!', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+        });
       } else {
         console.error('Error submitting survey:', response.statusText);
         // Handle error scenarios
@@ -64,7 +81,6 @@ const SurveyCreationPage = () => {
       // Handle network errors or other issues
     }
   };
-  
 
   return (
     <div className="container mx-auto p-4">
@@ -92,54 +108,70 @@ const SurveyCreationPage = () => {
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600">Category:</label>
           <select
-            name="category"
-            value={surveyData.category}
-            onChange={handleInputChange}
-            className="mt-1 p-2 w-full border rounded-md"
-          >
-            <option value="Entertainment">Entertainment</option>
-            <option value="Work">Work</option>
-            <option value="Employee Engagement">Employee Engagement</option>
-          </select>
+          name="category"
+          value={surveyData.category}
+          onChange={handleCategoryChange}
+          className="mt-1 p-2 w-full border rounded-md"
+        >
+          <option value="Entertainment">Entertainment</option>
+          <option value="Work">Work</option>
+          <option value="Employee Engagement">Employee Engagement</option>
+        </select>
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600">Questions:</label>
-          <ul>
-            {surveyData.questions.map((question, index) => (
-              <li key={index} className="mb-2 flex justify-between items-center">
-                <p className="mr-2 text-lg">{index + 1}. {question.text}</p>
-                <div className="flex justify-center items-center mt-2">
-                  <label className="mr-2">
-                    <input
-                      type="radio"
-                      value="Yes"
-                      checked={question.answer === 'Yes'}
-                      onChange={() => handleAnswerChange(index, 'Yes')}
-                      className="mr-1 text-lg radio checked:bg-blue-500"
-                    />
-                    Yes
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      value="No"
-                      checked={question.answer === 'No'}
-                      onChange={() => handleAnswerChange(index, 'No')}
-                      className="mr-1 radio checked:bg-red-500"
-                    />
-                    No
-                  </label>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        
+
+        {surveyData.questions.map((question, index) => (
+          <div key={index} className="mb-4">
+            <label className="block text-sm font-medium text-gray-600">
+              Question {index + 1}:
+            </label>
+            <input
+              type="text"
+              name="question"
+              value={question.question}
+              onChange={(e) => handleInputChange(e, index)}
+              className="mt-1 p-2 w-full border rounded-md"
+            />
+            <label className="block text-sm font-medium text-gray-600 mt-2">
+              Options:
+            </label>
+            <div className="flex space-x-2">
+              {question.options.map((option, optionIndex) => (
+                <input
+                  key={optionIndex}
+                  type="text"
+                  value={option}
+                  onChange={(e) => {
+                    const updatedOptions = [...question.options];
+                    updatedOptions[optionIndex] = e.target.value;
+                    const updatedQuestions = [...surveyData.questions];
+                    updatedQuestions[index].options = updatedOptions;
+                    setSurveyData({
+                      ...surveyData,
+                      questions: updatedQuestions,
+                    });
+                  }}
+                  className="mt-1 p-2 flex-grow border rounded-md"
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => removeQuestion(index)}
+              className="text-red-500 mt-2 underline cursor-pointer"
+            >
+              Remove Question
+            </button>
+          </div>
+        ))}
+
+        <button type="button" onClick={addQuestion} className="bg-blue-500 text-white p-2 rounded-md">
+          Add Question
+        </button>
         <button type="submit" className="bg-green-500 text-white p-2 rounded-md">
           Create Survey
         </button>
       </form>
-      <ToastContainer></ToastContainer>
+      <ToastContainer />
     </div>
   );
 };
