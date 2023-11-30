@@ -55,7 +55,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/details/:_id",
-        loader: () => fetch("http://localhost:5000/survey"),
+        loader: () => fetch("https://polling-survey-server-two.vercel.app/survey"),
         element: <PrivateRoute><SurveyDetailsPage></SurveyDetailsPage></PrivateRoute>,
       },
       {

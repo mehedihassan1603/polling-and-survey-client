@@ -48,7 +48,7 @@ const SurveyDetailsPage = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch("http://localhost:5000/comment");
+        const response = await fetch("https://polling-survey-server-two.vercel.app/comment");
         if (response.ok) {
           const commentsData = await response.json();
           console.log(commentsData);
@@ -113,7 +113,7 @@ const SurveyDetailsPage = () => {
         like: surveyData.like + 1,
       };
       try {
-        const response = await fetch(`http://localhost:5000/survey/${_id}`, {
+        const response = await fetch(`https://polling-survey-server-two.vercel.app/survey/${_id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -143,7 +143,7 @@ const SurveyDetailsPage = () => {
         dislike: surveyData.dislike + 1,
       };
       try {
-        const response = await fetch(`http://localhost:5000/survey/${_id}`, {
+        const response = await fetch(`https://polling-survey-server-two.vercel.app/survey/${_id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -170,7 +170,7 @@ const SurveyDetailsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/survey/${_id}`);
+        const response = await fetch(`https://polling-survey-server-two.vercel.app/survey/${_id}`);
         if (response.ok) {
           const data = await response.json();
           setSurvey(data);
@@ -192,7 +192,7 @@ const SurveyDetailsPage = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000/survey/${_id}`, {
+      const response = await fetch(`https://polling-survey-server-two.vercel.app/survey/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -268,7 +268,7 @@ const SurveyDetailsPage = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/comment`, {
+      const response = await fetch(`https://polling-survey-server-two.vercel.app/comment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

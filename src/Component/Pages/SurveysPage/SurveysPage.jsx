@@ -13,7 +13,7 @@ const SurveysPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/survey")
+      .get("https://polling-survey-server-two.vercel.app/survey")
       .then((response) => setSurveys(response.data))
       .catch((error) => console.error("Error fetching survey data:", error));
   }, []); 

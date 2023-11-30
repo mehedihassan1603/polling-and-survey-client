@@ -62,7 +62,7 @@ const SurveyCreationPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/survey', {
+      const response = await fetch('https://polling-survey-server-two.vercel.app/survey', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

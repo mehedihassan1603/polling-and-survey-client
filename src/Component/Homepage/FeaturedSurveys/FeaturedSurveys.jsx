@@ -6,7 +6,7 @@ const FeaturedSurveys = () => {
   useEffect(() => {
     const fetchFeaturedSurveys = async () => {
       try {
-        const response = await fetch('http://localhost:5000/survey');
+        const response = await fetch('https://polling-survey-server-two.vercel.app/survey');
         const data = await response.json();
         // Sort surveys by totalVote in descending order
         const sortedSurveys = data.sort((a, b) => b.totalVote - a.totalVote);

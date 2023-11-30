@@ -43,7 +43,7 @@ const SurveyDetailsPage = () => {
         like: surveyData.like + 1,
       };
       try {
-        const response = await fetch(`http://localhost:5000/survey/${_id}`, {
+        const response = await fetch(`https://polling-survey-server-two.vercel.app/survey/${_id}`, {
           method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const SurveyDetailsPage = () => {
         dislike: surveyData.dislike + 1,
       };
       try {
-        const response = await fetch(`http://localhost:5000/survey/${_id}`, {
+        const response = await fetch(`https://polling-survey-server-two.vercel.app/survey/${_id}`, {
           method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +91,7 @@ const SurveyDetailsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/survey/${_id}`);
+        const response = await fetch(`https://polling-survey-server-two.vercel.app/survey/${_id}`);
         if (response.ok) {
           const data = await response.json();
           setSurvey(data);
@@ -112,7 +112,7 @@ const SurveyDetailsPage = () => {
     };
   
     try {
-      const response = await fetch(`http://localhost:5000/survey/${_id}`, {
+      const response = await fetch(`https://polling-survey-server-two.vercel.app/survey/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -169,7 +169,7 @@ const SurveyDetailsPage = () => {
       comment: comment,
     };
 
-    fetch(`http://localhost:5000/survey/${_id}`, {
+    fetch(`https://polling-survey-server-two.vercel.app/survey/${_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

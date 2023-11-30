@@ -9,7 +9,7 @@ const LatestSurveys = () => {
   useEffect(() => {
     const fetchLatestSurveys = async () => {
       try {
-        const response = await fetch('http://localhost:5000/survey');
+        const response = await fetch('https://polling-survey-server-two.vercel.app/survey');
         const data = await response.json();
         // Sort surveys by timestamp in descending order
         const sortedSurveys = data.sort((a, b) => moment(b.timestamp) - moment(a.timestamp));
