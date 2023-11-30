@@ -85,9 +85,9 @@ const CheckoutForm = () => {
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "Thank you for payment",
+                    title: "Successfull. Waiting for Admin confirmation!",
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 3000
                 });
                 navigate('/userDashboard/paymentHistory')
             }

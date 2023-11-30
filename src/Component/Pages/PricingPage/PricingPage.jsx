@@ -30,7 +30,7 @@ const PricingPage = () => {
   };
 
   return (
-    <div className="container mx-auto my-10 w-8/12 mx-auto">
+    <div className="container mx-auto my-10 w-8/12">
       <h1 className="text-3xl font-semibold mb-4">Pricing Page</h1>
 
       {/* Pricing options */}
@@ -52,7 +52,7 @@ const PricingPage = () => {
           <button
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2"
           >
-            <NavLink to="../../../blog.html">Become Pro-User</NavLink>
+            <NavLink to="/userDashboard/payment">Become Pro-User</NavLink>
           </button>
         </div>
       </div>
@@ -63,7 +63,7 @@ const PricingPage = () => {
       {!user.isPro && (
         <div className="mb-4">
           <p>Want more features? Become a Pro User!</p>
-          <Link to="/become-pro" className="text-blue-500 hover:underline">
+          <Link to="../../../blog.html" className="text-blue-500 hover:underline">
             Become a Pro User
           </Link>
         </div>

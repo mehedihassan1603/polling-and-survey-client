@@ -1,93 +1,65 @@
-import React, { useState } from 'react';
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import useAdmin from "../../../AuthProvider/useAdmin";
 
 const SurveyorDashboard = () => {
-  const [surveyFeedback, setSurveyFeedback] = useState([]);
-  const [feedbackMessage, setFeedbackMessage] = useState('');
-  const [surveyResponses, setSurveyResponses] = useState([]); // Assuming this is an array of survey responses
-
-  const handleSurveyFeedback = (surveyId) => {
-    // Fetch and update survey feedback based on the survey ID
-    setSurveyFeedback(/* fetched survey feedback for the given surveyId */);
-    // Open a modal to display survey feedback
-    // You can use a modal library or implement your modal component
-    // Example: openModal();
-  };
-
-  const handleAdminFeedback = (surveyId) => {
-    // Fetch and update admin feedback based on the survey ID
-    setFeedbackMessage(/* fetched admin feedback for the given surveyId */);
-    // Open a modal to display admin feedback
-    // Example: openModal();
-  };
-
-  // Assuming surveyResponses is an array of objects with properties name, email, time, and voted
-  const renderSurveyResponsesTable = () => {
-    return (
-      <table className="min-w-full bg-white border border-gray-300">
-        {/* Table headers */}
-        <thead>
-          <tr>
-            <th className="border-b">Name</th>
-            <th className="border-b">Email</th>
-            <th className="border-b">Time</th>
-            <th className="border-b">Voted</th>
-          </tr>
-        </thead>
-        {/* Table body */}
-        <tbody>
-          {surveyResponses.map((response, index) => (
-            <tr key={index}>
-              <td className="border-b">{response.name}</td>
-              <td className="border-b">{response.email}</td>
-              <td className="border-b">{response.time}</td>
-              <td className="border-b">{response.voted}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
-
-  // Chart component can be added based on your chart library (e.g., Chart.js)
+  const [isAdmin] = useAdmin();
+  const location = useLocation();
 
   return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-8">Surveyor Dashboard</h1>
-
-      {/* Survey Feedback */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Survey Feedback</h2>
-        {/* Logic to display survey feedback */}
-        <button
-          onClick={() => handleSurveyFeedback(/* surveyId */)}
-          className="p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-        >
-          View Survey Feedback
-        </button>
+    <div className="flex gap-10 w-10/12 mx-auto bg-red-200">
+      <div className="w-64 min-h-screen bg-slate-400">
+        {isAdmin ? (
+          <ul className="transition-all ease-in-out duration-300 mt-20 flex flex-col gap-10">
+            
+            <li>
+              <NavLink
+                to="/surveyorDashboard/surveycreation"
+                className={`mt-6 bg-gradient-to-r from-blue-300 via-sky-200 to-blue-300 px-4 py-2 rounded-md shadow-lg ${
+                  location.pathname === "/dashboard/surveycreation"
+                    ? "bg-gradient-to-r from-red-500 via-red-400 to-red-500 text-white"
+                    : ""
+                }`}
+              >
+                Create Survey
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/surveyorDashboard/surveyorInfo"
+                className={`mt-6 bg-gradient-to-r from-blue-300 via-sky-200 to-blue-300 px-4 py-2 rounded-md shadow-lg ${
+                  location.pathname === "/surveyorDashboard/surveyorInfo"
+                    ? "bg-gradient-to-r from-red-500 via-red-400 to-red-500 text-white"
+                    : ""
+                }`}
+              >
+                Manage Survey
+              </NavLink>
+            </li>
+            
+            <div className="divider divider-neutral"></div>
+            <li>
+              <a href="/" class="group cursor-pointer flex h-min ring-none items-center justify-center hover:opacity-95 disabled:opacity-50  rounded-lg py-2 px-4 font-dm focus:outline-none !ring-transparent text-violet-800 border border-violet-500 border-b-violet-400 border-b-4 hover:border active:border bg-white hover:text-violet-900 hover:bg-gray-50  active:bg-gray-100 active:text-violet-600 focus-visible:outline-violet-600 focus-visible:ring-violet-700 text-sm sm:text-base">
+                <span class="ml-3">Home</span>
+              </a>
+            </li>
+            <li>
+              <a class="group cursor-pointer flex h-min ring-none items-center justify-center hover:opacity-95 disabled:opacity-50  rounded-lg py-2 px-4 font-dm focus:outline-none !ring-transparent text-violet-800 border border-violet-500 border-b-violet-400 border-b-4 hover:border active:border bg-white hover:text-violet-900 hover:bg-gray-50  active:bg-gray-100 active:text-violet-600 focus-visible:outline-violet-600 focus-visible:ring-violet-700 text-sm sm:text-base">
+                <span class="ml-3">ALL SURVEY</span>
+              </a>
+            </li>
+            <li>
+              <a class="group cursor-pointer flex h-min ring-none items-center justify-center hover:opacity-95 disabled:opacity-50  rounded-lg py-2 px-4 font-dm focus:outline-none !ring-transparent text-violet-800 border border-violet-500 border-b-violet-400 border-b-4 hover:border active:border bg-white hover:text-violet-900 hover:bg-gray-50  active:bg-gray-100 active:text-violet-600 focus-visible:outline-violet-600 focus-visible:ring-violet-700 text-sm sm:text-base">
+                <span class="ml-3">CONTACT</span>
+              </a>
+            </li>
+          </ul>
+        ) : (
+          <p>Loading for a Surveyor</p>
+        )}
       </div>
-
-      {/* Admin Feedback */}
-      {feedbackMessage && (
-        <div className="mb-8">
-          <h2 className="text-xl font-bold mb-4">Admin Feedback</h2>
-          {/* Logic to display admin feedback */}
-          <button
-            onClick={() => handleAdminFeedback(/* surveyId */)}
-            className="p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-          >
-            View Admin Feedback
-          </button>
-        </div>
-      )}
-
-      {/* Survey Responses Table */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Survey Responses</h2>
-        {renderSurveyResponsesTable()}
+      <div className="w-full">
+        <Outlet />
       </div>
-
-      {/* Chart Component */}
-      {/* Include your chart component here */}
     </div>
   );
 };

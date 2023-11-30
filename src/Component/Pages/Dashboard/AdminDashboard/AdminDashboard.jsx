@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import useAdmin from "../../../AuthProvider/useAdmin";
 import useAxiosSecure from "../../../AuthProvider/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import AllPayments from "./AllPayments";
+import moment from "moment/moment";
 
 const AdminDashboard = () => {
   const [userFilter, setUserFilter] = useState("all");
@@ -9,16 +11,44 @@ const AdminDashboard = () => {
   const [surveyStatus, setSurveyStatus] = useState("published");
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [surveyResponses, setSurveyResponses] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   const axiosSecure = useAxiosSecure();
+
+
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
-      console.log(res.data);
-      return res.data;
+      try {
+        const res = await axiosSecure.get("/users");
+        console.log(res.data);
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        throw error;
+      } finally {
+        setLoading(false); // Set loading to false whether the request succeeds or fails
+      }
     },
   });
+
+  const { data: survey = [] } = useQuery({
+    queryKey: ["survey"],
+    queryFn: async () => {
+      try {
+        const res = await axiosSecure.get("/survey");
+        console.log(res.data);
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        throw error;
+      } finally {
+        setLoading(false); // Set loading to false whether the request succeeds or fails
+      }
+    },
+  });
+  useEffect(() => {
+    setSurveyResponses(survey); // Move the setSurveyResponses call here
+  }, [survey]);
 
   useEffect(() => {
     // Filter users based on the selected role when the component mounts
@@ -54,6 +84,11 @@ const AdminDashboard = () => {
     // Logic to unpublish survey and provide feedback
     setFeedbackMessage(`Survey ${surveyId} unpublished successfully.`);
   };
+  if (loading) {
+    // Render a loader while the data is being fetched
+    return <div>Loading...</div>;
+  }
+
 
   // Assuming surveyResponses is an array of objects with properties name, email, time, and voted
   const renderSurveyResponsesTable = () => {
@@ -72,16 +107,20 @@ const AdminDashboard = () => {
         <tbody>
           {surveyResponses.map((response, index) => (
             <tr key={index}>
-              <td className="border-b">{response.name}</td>
+              <td className="border-b">{response.title}</td>
               <td className="border-b">{response.email}</td>
-              <td className="border-b">{response.time}</td>
-              <td className="border-b">{response.voted}</td>
+              <td className="border-b">
+                {moment(response.date).format('MMMM Do YYYY, h:mm:ss a')}
+                {/* Adjust the format according to your requirements */}
+              </td>
+              <td className="border-b">{response.totalVote}</td>
             </tr>
           ))}
         </tbody>
       </table>
     );
   };
+  
 
   // Chart component can be added based on your chart library (e.g., Chart.js)
 
@@ -109,7 +148,12 @@ const AdminDashboard = () => {
           <h2 className="text-3xl">Filtered Users</h2>
           <h2 className="text-3xl">Total Users: {filteredUsers.length}</h2>
         </div>
-        <div className="overflow-x-auto">
+
+        {loading ? (
+        <div className="text-4xl mt-20">Loading data Please wait...</div>
+      ) : (
+        <div>
+          <div className="overflow-x-auto">
           <table className="table table-zebra w-full">
             {/* head */}
             <thead>
@@ -132,6 +176,12 @@ const AdminDashboard = () => {
             </tbody>
           </table>
         </div>
+        </div>
+      )}
+
+
+
+        
       </div>
     
 
@@ -156,7 +206,7 @@ const AdminDashboard = () => {
       {/* Payments of Pro Users */}
       <div className="mb-8">
         <h2 className="text-xl font-bold mb-4">Payments of Pro Users</h2>
-        {/* Logic to display payments */}
+        <AllPayments></AllPayments>
       </div>
 
       {/* Survey Responses Table */}

@@ -22,6 +22,7 @@ const SurveyDetailsPage = () => {
   const { user } = useAuth();
   const surveyData = details.find((item) => item._id === _id);
   const [survey, setSurvey] = useState(null);
+  const [surveyAll, setSurveyAll] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [comment, setComment] = useState("");
@@ -237,6 +238,25 @@ const SurveyDetailsPage = () => {
     }
     setReportDisabled(true);
   };
+  const { data: surveys = [] } = useQuery({
+    queryKey: ["surveys"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/survey");
+      console.log(res.data);
+      return res.data;
+    },
+  });
+  useEffect(() => {
+    const filteredSurvey = surveys.find((survey) => survey._id === _id);
+    console.log(filteredSurvey);
+
+    if (filteredSurvey) {
+      setSurveyAll(filteredSurvey);
+      // Set the title in the state
+    }
+  }, [surveys, _id]);
+  console.log(surveyAll)
+  
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
@@ -258,6 +278,9 @@ const SurveyDetailsPage = () => {
           email: user.email,
           name: user.displayName,
           surveyID: _id,
+          surveyName: surveyAll.title
+          
+          
         }),
       });
 

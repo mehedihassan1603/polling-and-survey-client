@@ -77,6 +77,9 @@ const Navbar = () => {
             <li>
               <NavLink to="/dashboard/adminHome">Admin Dashboard</NavLink>
             </li>
+            <li>
+              <NavLink to="/surveyorDashboard/surveycreation">Surveyor Dashboard</NavLink>
+            </li>
 
             {/* <li>
               <Link to="/dashboard/payment">Pro-User</Link>

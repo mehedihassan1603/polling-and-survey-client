@@ -152,7 +152,7 @@ const AllUsers = () => {
                       <div className="flex flex-col justify-center items-center">
                         <h1>Pro-User Request</h1>
                         <div>
-                          <button onClick={() => handleAcceptProUserRequest(user)}>
+                          <button className="bg-green-500 mt-2 rounded-md px-4 py-1 text-white hover:bg-green-800" onClick={() => handleAcceptProUserRequest(user)}>
                             Accept
                           </button>
                         </div>

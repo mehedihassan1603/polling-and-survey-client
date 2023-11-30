@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useAuth from '../../../AuthProvider/useAuth';
 
 const SurveyCreationPage = () => {
+  const {user} = useAuth();
   const [surveyData, setSurveyData] = useState({
     title: '',
     description: '',
@@ -11,6 +13,7 @@ const SurveyCreationPage = () => {
     totalVote: 0,
     like: 0,
     dislike: 0,
+    email: user.email
   });
 
   const handleInputChange = (e, index) => {

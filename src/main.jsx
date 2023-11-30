@@ -30,6 +30,8 @@ import AdminRoute from "./Component/Pages/Dashboard/AdminDashboard/AdminRoute.js
 import Payment from "./Component/Pages/Dashboard/Payment/Payment.jsx";
 import PaymentHistory from "./Component/Pages/Dashboard/Payment/PaymentHistory.jsx";
 import AdminHome from "./Component/Pages/Dashboard/AdminDashboard/AdminHome.jsx";
+import AllPayments from "./Component/Pages/Dashboard/AdminDashboard/AllPayments.jsx";
+import SurveyorInfo from "./Component/Pages/Dashboard/Surveyor Dashboard/SurveyorInfo.jsx";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +80,10 @@ const router = createBrowserRouter([
         element: <AdminHome></AdminHome>,
       },
       {
+        path: "allpay",
+        element: <AllPayments></AllPayments>,
+      },
+      {
         path: "surveycreation",
         element: <SurveyCreationPage></SurveyCreationPage>,
       },
@@ -122,6 +128,20 @@ const router = createBrowserRouter([
       {
         path: "paymentHistory",
         element: <PaymentHistory></PaymentHistory>,
+      },
+    ],
+  },
+  {
+    path: "surveyorDashboard",
+    element: <SurveyorDashboard></SurveyorDashboard>,
+    children: [
+      {
+        path: "surveycreation",
+        element: <SurveyCreationPage></SurveyCreationPage>,
+      },
+      {
+        path: "surveyorInfo",
+        element: <SurveyorInfo></SurveyorInfo>,
       },
     ],
   },
