@@ -10,6 +10,7 @@ const SurveyorInfo = () => {
   const [loading, setLoading] = useState(true);
   const [showSurveyFeedback, setShowSurveyFeedback] = useState(false);
   const [desiredSurveyID, setDesiredSurveyID] = useState(null);
+  
 
 
   const axiosSecure = useAxiosSecure();
@@ -105,6 +106,8 @@ useEffect(() => {
     );
   };
 
+  
+
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold mb-8">Surveyor Dashboard</h1>
@@ -144,8 +147,7 @@ useEffect(() => {
         {renderSurveyResponsesTable()}
       </div>
 
-      {/* Chart Component */}
-      {/* Include your chart component here */}
+      
     </div>
   );
 };

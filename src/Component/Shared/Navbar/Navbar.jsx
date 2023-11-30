@@ -11,7 +11,7 @@ const Navbar = () => {
   };
   return (
     <div>
-      <div className="navbar bg-gradient-to-r from-cyan-600 via-cyan-600 to-cyan-700 text-white">
+      <div className="navbar bg-gradient-to-r from-emerald-800 via-emerald-600 to-emerald-800 text-white">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -35,21 +35,17 @@ const Navbar = () => {
               className="menu menu-md dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/surveys">Surveys</NavLink>
-              </li>
-              <li>
-                <NavLink to="/surveydetails">Survey Details</NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard">Dashboard</NavLink>
-              </li>
-
-              <li>
-                <NavLink to="/bid-requests">Bid Requests</NavLink>
-              </li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/surveys">Surveys</NavLink>
+            </li>
+            <li>
+              <NavLink to="/dash">Dashboard</NavLink>
+            </li>
+            <li>
+              <NavLink to="/pricing">Pro</NavLink>
+            </li>
             </ul>
           </div>
           <a href="/">
@@ -60,7 +56,7 @@ const Navbar = () => {
             />
           </a>
           <NavLink to="/" className="normal-case text-xl font-semibold">
-            JobBook
+            Survey-Hunter
           </NavLink>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -72,21 +68,10 @@ const Navbar = () => {
               <NavLink to="/surveys">Surveys</NavLink>
             </li>
             <li>
-              <NavLink to="/surveydetails">Survey Details</NavLink>
+              <NavLink to="/dash">Dashboard</NavLink>
             </li>
             <li>
-              <NavLink to="/dashboard/adminHome">Admin Dashboard</NavLink>
-            </li>
-            <li>
-              <NavLink to="/surveyorDashboard/surveycreation">Surveyor Dashboard</NavLink>
-            </li>
-
-            {/* <li>
-              <Link to="/dashboard/payment">Pro-User</Link>
-            </li> */}
-
-            <li>
-              <NavLink to="/pricing">Pricing</NavLink>
+              <NavLink to="/pricing">Pro</NavLink>
             </li>
           </ul>
         </div>

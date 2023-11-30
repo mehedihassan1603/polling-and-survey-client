@@ -54,7 +54,7 @@ const SurveyorDashboard = () => {
             </li>
           </ul>
         ) : (
-          <p>Loading for a Surveyor</p>
+          <p>Loading for Admin...</p>
         )}
       </div>
       <div className="w-full">
