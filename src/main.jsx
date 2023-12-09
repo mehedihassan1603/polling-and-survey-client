@@ -33,6 +33,7 @@ import AdminHome from "./Component/Pages/Dashboard/AdminDashboard/AdminHome.jsx"
 import AllPayments from "./Component/Pages/Dashboard/AdminDashboard/AllPayments.jsx";
 import SurveyorInfo from "./Component/Pages/Dashboard/Surveyor Dashboard/SurveyorInfo.jsx";
 import SurveyorRoute from "./Component/Pages/Dashboard/Surveyor Dashboard/SurveyorRoute.jsx";
+import FAQSection from "./Component/Homepage/FAQSection.jsx";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/pricing",
         element: <PricingPage></PricingPage>,
+      },
+      {
+        path: "/faq",
+        element: <FAQSection></FAQSection>,
       },
       {
         path: "/register",

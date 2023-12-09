@@ -149,7 +149,7 @@ const AdminDashboard = () => {
           <h2 className="text-3xl">Total Users: {filteredUsers.length}</h2>
         </div>
 
-        {loading ? (
+        {loading && filteredUsers.length > 0 ? (
         <div className="text-4xl mt-20">Loading data Please wait...</div>
       ) : (
         <div>

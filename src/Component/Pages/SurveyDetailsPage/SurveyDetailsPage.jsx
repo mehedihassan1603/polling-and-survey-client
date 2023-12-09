@@ -362,7 +362,7 @@ const SurveyDetailsPage = () => {
           </p>
         )}
 
-        <div className=" w-8/12 mx-auto my-10 w-8/12 mx-auto">
+        <div className=" w-8/12 mx-auto my-10">
           <label className="font-medium block text-2xl bg-slate-700 text-white p-2">
             Comment (Pro-User Only):
           </label>

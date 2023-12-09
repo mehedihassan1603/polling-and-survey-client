@@ -32,7 +32,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-md dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-md dropdown-content mt-3 z-10 p-2 shadow bg-blue-700 rounded-box w-52"
             >
               <li>
               <NavLink to="/">Home</NavLink>
@@ -46,8 +46,12 @@ const Navbar = () => {
             <li>
               <NavLink to="/pricing">Pro</NavLink>
             </li>
+            <li>
+              <NavLink to="/faq">FAQ?</NavLink>
+            </li>
             </ul>
           </div>
+          
           <a href="/">
             <img
               src="https://i.ibb.co/XS0stSd/logo-removebg-preview.png"
@@ -72,6 +76,9 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink to="/pricing">Pro</NavLink>
+            </li>
+            <li>
+              <NavLink to="/faq">FAQ?</NavLink>
             </li>
           </ul>
         </div>

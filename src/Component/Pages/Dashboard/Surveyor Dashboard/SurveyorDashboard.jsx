@@ -15,8 +15,8 @@ const SurveyorDashboard = () => {
               <NavLink
                 to="/surveyorDashboard/surveycreation"
                 className={`mt-6 bg-gradient-to-r from-blue-300 via-sky-200 to-blue-300 px-4 py-2 rounded-md shadow-lg ${
-                  location.pathname === "/dashboard/surveycreation"
-                    ? "bg-gradient-to-r from-red-500 via-red-400 to-red-500 text-white"
+                  location.pathname === "/surveyorDashboard/surveycreation"
+                    ? "bg-gradient-to-r from-red-500 via-red-700 to-red-500 text-white"
                     : ""
                 }`}
               >
@@ -28,7 +28,7 @@ const SurveyorDashboard = () => {
                 to="/surveyorDashboard/surveyorInfo"
                 className={`mt-6 bg-gradient-to-r from-blue-300 via-sky-200 to-blue-300 px-4 py-2 rounded-md shadow-lg ${
                   location.pathname === "/surveyorDashboard/surveyorInfo"
-                    ? "bg-gradient-to-r from-red-500 via-red-400 to-red-500 text-white"
+                    ? "bg-gradient-to-r from-red-500 via-red-700 to-red-500 text-white"
                     : ""
                 }`}
               >

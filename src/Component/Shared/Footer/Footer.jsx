@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="bg-gray-800  text-white py-5 mt-10">
       <div className="container pl-10 lg:pl-0 mx-auto grid grid-cols-2 lg:grid-cols-4">
         <div className="lg:w-2/4">
-          <h3 className="text-3xl text-red-500 mb-3">Job-Book</h3>
+          <h3 className="text-3xl text-red-500 mb-3">Survey-Book</h3>
           <h1 className="mt-6 mb-3 text-xl">Visit Us: </h1>
           <ul className="list-none p-0">
             <li>
@@ -29,7 +29,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="lg:w-2/4">
-          <h3 className="text-xl mb-3">Smart Jobs:</h3>
+          <h3 className="text-xl mb-3">Smart Surveys:</h3>
           <ul className="list-none p-0">
             <li>
               <a href="#">Front-End Developer</a>
@@ -42,13 +42,13 @@ const Footer = () => {
           </ul>
         </div>
         <div className="lg:w-2/4">
-          <h3 className="text-xl my-3">Job Deals:</h3>
+          <h3 className="text-xl my-3">Survey Deals:</h3>
           <ul className="list-none p-0">
             <li>
-              <a href="#">JobShare:</a>
+              <a href="#">SurveyShare:</a>
             </li>
             <li>
-              <a href="#">JobBookBusiness</a>
+              <a href="#">SurveyBookBusiness</a>
             </li>
           </ul>
         </div>
@@ -85,7 +85,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="container bg-black mx-auto text-center py-4">
-        <p>&copy; 2023 Job-Book. All rights reserved.</p>
+        <p>&copy; 2023 Survey-Hunter. All rights reserved.</p>
       </div>
     </footer>
   );

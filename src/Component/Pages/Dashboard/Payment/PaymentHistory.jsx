@@ -9,14 +9,14 @@ const PaymentHistory = () => {
     const { data: payments = [] } = useQuery({
         queryKey: ['payments', user.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/payments/${user.email}`)
+            const res = await axiosSecure.get(`/payments/${user?.email}`)
             return res.data;
         }
     })
 
     return (
         <div>
-            <h2 className="text3-xl">Total Payments: {payments.length}</h2>
+            <h2 className="text3-xl mt-10">Your Payment History: {payments.length}</h2>
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
                   

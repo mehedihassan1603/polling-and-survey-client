@@ -4,10 +4,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useSurveyor from "../../../AuthProvider/useSurveyor";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import useAdmin from "../../../AuthProvider/useAdmin";
 
 const SurveyorRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
-  const [isAdmin, isAdminLoading] = useSurveyor();
+  const [isAdmin, isAdminLoading] = useAdmin();
   const location = useLocation();
   const navigate = useNavigate();
 

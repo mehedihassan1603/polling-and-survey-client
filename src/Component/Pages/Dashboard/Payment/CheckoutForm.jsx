@@ -71,7 +71,7 @@ const CheckoutForm = () => {
 
             // now save the payment in the database
             const payment = {
-                email: user.email,
+                email: user?.email,
                 price: amount,
                 transactionId: paymentIntent.id,
                 date: new Date(), // utc date convert. use moment js to 
@@ -97,7 +97,7 @@ const CheckoutForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-blue-400 rounded shadow-lg">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-blue-100 rounded shadow-lg">
       <div className="mb-4">
         <label className="block text-black text-sm font-bold mb-2" htmlFor="card-element">
           Card Details

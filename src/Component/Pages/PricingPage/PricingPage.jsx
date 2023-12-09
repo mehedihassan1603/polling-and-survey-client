@@ -72,7 +72,7 @@ const PricingPage = () => {
       {/* Display a success message if payment is successful */}
       {isPaymentSuccessful && (
         <div className="bg-green-200 p-4 rounded">
-          <p className="text-green-800 font-semibold">Payment successful! You are now a Pro User.</p>
+          <p className="text-green-800 font-semibold">You are a free user</p>
         </div>
       )}
     </div>

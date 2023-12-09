@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useAuth from '../../../AuthProvider/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const SurveyCreationPage = () => {
   const {user} = useAuth();
+  const navigate = useNavigate();
   const [surveyData, setSurveyData] = useState({
     title: '',
     description: '',
@@ -75,6 +77,9 @@ const SurveyCreationPage = () => {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 2000,
         });
+        setTimeout(() => {
+          navigate("/");
+        }, 2500);
       } else {
         console.error('Error submitting survey:', response.statusText);
         // Handle error scenarios
